@@ -94,6 +94,33 @@ public class GameSaveData
         SetNamedIntValue(resources, resourceId, amount);
     }
 
+    public void AddResourceAmount(string resourceId, int amount)
+    {
+        if (string.IsNullOrWhiteSpace(resourceId) || amount == 0)
+        {
+            return;
+        }
+
+        SetResourceAmount(resourceId, GetResourceAmount(resourceId) + amount);
+    }
+
+    public bool TryConsumeResource(string resourceId, int amount)
+    {
+        if (string.IsNullOrWhiteSpace(resourceId) || amount <= 0)
+        {
+            return false;
+        }
+
+        int currentAmount = GetResourceAmount(resourceId);
+        if (currentAmount < amount)
+        {
+            return false;
+        }
+
+        SetResourceAmount(resourceId, currentAmount - amount);
+        return true;
+    }
+
     public int GetBuildingLevel(string buildingId)
     {
         return GetNamedIntValue(buildingLevels, buildingId);

@@ -60,6 +60,15 @@ public class SaveManager : MonoBehaviour
         get { return hasLoadedSave; }
     }
 
+    public bool HasLocalSaveData
+    {
+        get
+        {
+            string path = GetLocalSavePath();
+            return File.Exists(path) || PlayerPrefs.HasKey(LegacySavePrefsKey);
+        }
+    }
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
